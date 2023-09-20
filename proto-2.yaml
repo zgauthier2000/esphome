@@ -39,7 +39,7 @@ now_mqtt:
 #mqtt:
 #  broker: zackshouse.duckdns.org
 #  username: zack
-#  password: Xuj27tk0p!
+#  password: 
 #  topic_prefix: proto/proto-2
 
 #  on_message:
