@@ -30,7 +30,7 @@ logger:
 mqtt:
   broker: 192.168.1.95
   username: zack
-  password: Xuj27tk0p!
+  password: 
   topic_prefix: proto/proto-4
   on_message:
     - topic: proto/proto-4/status
