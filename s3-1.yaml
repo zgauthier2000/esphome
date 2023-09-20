@@ -35,7 +35,7 @@ ota:
 mqtt:
   broker: zackshouse.duckdns.org
   username: zack
-  password: Xuj27tk0p!
+  password: 
   topic_prefix: proto/s3-1
 
 #  on_message:
