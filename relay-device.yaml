@@ -1,0 +1,117 @@
+esphome:
+  name: relay-device
+  friendly_name: Relay Device
+
+bk72xx:
+  board: generic-bk7231n-qfn32-tuya
+
+
+captive_portal:
+
+mdns:
+
+logger:
+
+api:
+  encryption:
+    key: WMjV9JHFm2Tb50iXrgM5bwya3ai35HunXeFrYf4RYaE=
+
+wifi:
+  networks:
+  - ssid: !secret wifi_ssid
+    password: !secret wifi_password
+  - ssid: !secret wifi_ssid_mobile
+    password: !secret wifi_password_mobile
+    
+  ap:
+    ssid: "RELAY DEVICE"
+
+ota:
+
+button:
+- platform: restart
+  name: Restart
+
+debug:
+  update_interval: 30s
+
+text_sensor:
+- platform: debug
+  reset_reason:
+    name: Reset Reason
+- platform: libretiny
+  version:
+    name: LibreTiny Version
+
+sensor:
+  - platform: wifi_signal
+    name: Wifi Signal
+    update_interval: 10s
+    
+  - platform: uptime
+    name: Uptime
+    
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: P9
+      inverted: true
+    id: bekenbutton
+    name: "Button"
+    on_multi_click:
+
+      - timing:
+          - ON for .01s to 1s
+        then:
+          - switch.toggle: 
+              id: relay2
+
+      - timing:
+          - ON for at least 1s
+        then:
+          - switch.toggle: 
+              id: relay1
+
+switch:
+  - platform: gpio
+    id: relay1
+    name: "Relay 1"
+    pin: P7
+
+  - platform: gpio
+    id: relay2
+    name: "Relay 2"
+    pin: P24
+
+#output:
+#- platform: ledc
+#  id: output_red
+#  pin: P8
+#- platform: ledc
+#  id: output_green
+#  pin: P24
+#- platform: ledc
+#  id: output_blue
+#  pin: P26
+#- platform: ledc
+#  id: output_cold
+#  pin: P7
+
+#light:
+#- platform: rgbw
+#  id: light_rgbw
+#  name: Light
+#  red: output_red
+#  green: output_green
+#  blue: output_blue
+#  white: output_cold
+#  default_transition_length: 0s
+#  effects:
+#    - random:
+#        transition_length: 0s
+#        update_interval: .1s
+#    - flicker:
+#    - strobe:  
+#    - pulse:
+#        transition_length: 0s
+#        update_interval: .02s
