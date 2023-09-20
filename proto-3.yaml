@@ -29,7 +29,7 @@ web_server:
 mqtt:
   broker: zackshouse.duckdns.org
   username: zack
-  password: Xuj27tk0p!
+  password: 
   topic_prefix: proto/proto-3
   on_connect:
     then:
