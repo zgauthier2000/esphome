@@ -1,0 +1,202 @@
+esphome:
+  name: s3-1
+  friendly_name: S3-1
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+    version: latest
+
+# Enable logging
+logger:
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/u-fire/ESPHomeComponents/
+
+#now_mqtt_bridge:
+
+now_mqtt_bridge:
+
+#esp32_ble_tracker:
+#  scan_parameters:
+#    active: true
+#beethowen_receiver:    
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "INIE/h7pR4fe1SAkrWqE1Xp0lOgsstQoQSNw2SwpneI="
+
+ota:
+  password: "dc5b92fe7274dc4e649ad1b8f36a3221"
+
+mqtt:
+  broker: zackshouse.duckdns.org
+  username: zack
+  password: Xuj27tk0p!
+  topic_prefix: proto/s3-1
+
+#  on_message:
+#    - topic: proto-3/ota_mode
+#      payload: 'ON'
+#      then:
+#        - deep_sleep.prevent: sleepybaby
+#    - topic: proto-3/sleep_mode
+#      payload: 'ON'
+#      then:
+#        - deep_sleep.enter: sleepybaby
+
+#    - topic: proto-3/status
+#      payload: 'online'
+#      then:
+#        - light.turn_on:
+#            id: led 
+#            effect: flicker
+#        - light.turn_on:
+#            id: red_led
+#            effect: strobe
+wifi:
+  networks:
+  - ssid: !secret wifi_ssid
+    password: !secret wifi_password    
+  - ssid: !secret wifi_ssid_mobile
+    password: !secret wifi_password_mobile
+  - ssid: !secret wifi_ssid_megan
+    password: !secret wifi_password_megan
+
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "tell your WiFi said hi S3-1"
+  
+captive_portal:
+
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+wled:
+
+#output:
+#  - platform: ledc
+#    pin: GPIO4
+#    id: gpio_4
+#    channel: 2
+#    max_power: .05%
+
+#  - platform: ledc
+#    pin:
+#      number: GPIO33
+#      inverted: True
+#    id: gpio_33
+
+#light:
+#  - platform: monochromatic
+#    output: gpio_4
+#    name: LED
+#    id: led
+#    effects:
+#      - random:
+#          transition_length: 100ms
+#          update_interval: 100ms
+#      - flicker:
+#          alpha: 95%
+#          intensity: 10%
+#      - strobe:
+#      - pulse:
+#          transition_length: 4000ms
+#          update_interval: 4000ms     
+        
+#  - platform: monochromatic
+#    output: gpio_33
+#    name: Red LED
+#    id: red_led
+#    effects:
+#      - random:
+#          transition_length: 100ms
+#          update_interval: 100ms
+#      - flicker:
+#          alpha: 95%
+#          intensity: 10%
+#      - strobe:
+#      - pulse:
+#          transition_length: 4000ms
+#          update_interval: 4000ms     
+          
+sensor:
+  - platform: wifi_signal
+    name: Wifi signal
+    update_interval: 30s
+  - platform: uptime
+    name: Uptime
+
+  - platform: internal_temperature
+    name: "Internal Temperature"
+
+text_sensor:
+  - platform: version
+    name: ESP Version
+  - platform: wifi_info
+    ssid:
+      name: WiFi
+
+switch:      
+  - platform: restart
+    name: Restart
+
+light:
+
+  - platform: esp32_rmt_led_strip
+    id: led
+    name: LED
+    pin: GPIO48
+    default_transition_length: 1s
+    chipset: WS2812
+    num_leds: 1
+    rgb_order: grb
+    rmt_channel: 0
+    effects:
+      - wled:
+      - random:
+          transition_length: 1000ms
+          update_interval: 1000ms
+      - flicker:
+      - strobe:
+      - pulse:
+          transition_length: 1000ms
+          update_interval: 1000ms    
+
+#esp32_camera:
+#  name: Camera
+# external_clock:
+#    pin: GPIO0
+#    frequency: 15MHz
+#  i2c_pins:
+#    sda: GPIO26
+#    scl: GPIO27
+#  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
+#  vsync_pin: GPIO25
+#  href_pin: GPIO23
+#  pixel_clock_pin: GPIO22
+#  power_down_pin: GPIO32
+#  
+# Image/Video settings, https://esphome.io/components/esp32_camera.html
+#  max_framerate: 1 fps 
+#  idle_framerate: 0.1 fps # default: 0.1 fps - framerate for 'picture' in HA dashboard
+#  resolution: 320x240
+#  jpeg_quality: 10
+#  vertical_flip: False
+#  contrast: 0 # default: 0, variable -2 to 2
+#  brightness: 0 # default: 0, variable -2 to 2
+#  saturation: 0 # default: 0, variable -2 to 2
+  
+#Server video/pictures, https://esphome.io/components/esp32_camera_web_server.html
+
+#esp32_camera_web_server:
+#  - port: 8080
+#    mode: stream
+#  - port: 8081
+#    mode: snapshot
