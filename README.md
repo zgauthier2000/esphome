@@ -1,7 +1,7 @@
 # esphome
 Snapshot of working yaml for esphome on an ESP32-S3-devkit-c to run a 64x24 LED Matrix display. Has a home screen with a clock and cool flames in the background, a mode to just loop a gif and play music, and can receive text messages via mqtt. Can be switced between using the panels as "lights" (WLED, even) and as a display, without the two components fighting each-other.
 
-I pulled the voltage regulator off my devkit board and wired in an adjustable synchronous regulator so I could run the ESP at 3.5 volts, for better compatibility with the WS2812B's data needs. I also needed it to charge run the esp from a lifepo4 cell, which it does now, but that doesn't really matter for this project.
+I pulled the voltage regulator off my devkit board and wired in an adjustable synchronous regulator so I could run the ESP at 3.5 volts, for better compatibility with the WS2812B's data needs. I also needed it to charge/run the esp from a lifepo4 cell, which it does now, but that doesn't really matter for this project.
 
 ESP32-S3 devkit:
 https://www.amazon.com/dp/B0B6HT7V7P?psc=1&ref=ppx_yo2ov_dt_b_product_details
