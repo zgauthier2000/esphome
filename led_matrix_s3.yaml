@@ -8,9 +8,11 @@ esphome:
   on_boot:
     priority: 600
     then:
-    - delay: 100ms
-#    - dfplayer.set_volume: 30
-#    - delay: 250ms
+    - delay: 250ms
+    - dfplayer.set_eq: BASS
+    - delay: 250ms
+    - dfplayer.set_volume: 30
+    - delay: 250ms
     - dfplayer.play:
         file: 11
         loop: false
@@ -31,18 +33,11 @@ esp32:
     version: latest
 
 logger:
-#  level: none
+  level: none
   
 debug:
 
-#esp32_touch:
-#  setup_mode: true
-#  low_voltage_reference: 0.8V
-#  high_voltage_reference: 2.4V
-#  voltage_attenuation: 1.5V
-#api:
-#  encryption:
-#    key: "INIE/h7pR4fe1SAkrWqE1Xp0lOgsstQoQSNw2SwpneI="
+
 
 ota:
   password: "dc5b92fe7274dc4e649ad1b8f36a3221"
@@ -52,15 +47,13 @@ wifi:
   networks:
 #  - ssid: !secret wifi_ssid_mobile
 #    password: !secret wifi_password_mobile
-#  - ssid: !secret wifi_ssid
-#    password: !secret wifi_password
-  - ssid: !secret wifi_ssid_megan
-    password: !secret wifi_password_megan
+  - ssid: !secret wifi_ssid
+    password: !secret wifi_password
+#  - ssid: !secret wifi_ssid_megan
+#    password: !secret wifi_password_megan
 
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "tell your WiFi said hi $devicefriendlyname"
+ap:
+  ssid: "tell your WiFi said hi $devicefriendlyname"
   
 captive_portal:
 
@@ -112,7 +105,7 @@ animation:
     id: gif1
     type: RGB565
     resize: 64x16
-  - file: "newscreen.gif"
+  - file: "turntable1.gif"
     id: gif3
     type: RGB565
     resize: 64x24
@@ -173,10 +166,10 @@ mqtt:
   username: zack
   password: !secret mqtt_password
   topic_prefix: proto/$devicename
-  on_connect:
-          - dfplayer.play:
-              file: 5
-              loop: false
+#  on_connect:
+#          - dfplayer.play:
+#              file: 5
+#              loop: false
 display:
   - platform: addressable_light
     id: led_matrix_32x16_display
@@ -184,7 +177,7 @@ display:
     width: 64
     height: 24
     pixel_mapper: |-
-      int iMatrixOffset = y >= 8 ? 512 : 0;
+      int iMatrixOffset = y >= 8 ? (y >= 16 ? 1024 : 512) : 0;
       if (x % 2 == 0) {
         return (x * 8) + (y % 8) + iMatrixOffset;
       }
@@ -221,9 +214,9 @@ display:
           - component.suspend: led_matrix_32x16_display
           - component.resume:
               id: led_matrix_32x16_display
-              update_interval: 28ms
+              update_interval: 30ms
           - dfplayer.play:
-              file: 15
+              file: 16
               loop: true
 
     pages:
@@ -325,11 +318,11 @@ display:
 #    pin: GPIO4
 #    threshold: 1000
 
-sensor:
-  - platform: wifi_signal
-    name: Wifi signal
-  - platform: uptime
-    name: Uptime
+#sensor:
+#  - platform: wifi_signal
+#    name: Wifi signal
+#  - platform: uptime
+#    name: Uptime
 
 #  - platform: dht
 #    pin: GPIO13
@@ -626,7 +619,7 @@ light:
   - platform: partition
     name: "Big Matrix"
     id: big_matrix
-    color_correct: [50%, 50%, 50%]
+    color_correct: [70%, 70%, 70%]
     default_transition_length: 1ms
     segments:
       # Use first 10 LEDs from the light with ID light1
