@@ -9,20 +9,24 @@ https://www.amazon.com/dp/B0B6HT7V7P?psc=1&ref=ppx_yo2ov_dt_b_product_details
 Using the 8megs of flash on this board with a custom partitions file. See the included .csv.
 I have the two megs of PSRAM enabled - it would crash with more than 3ish panels running WLED visualizers otherwise.
 
+
 LED Panels (I used six):
 https://www.amazon.com/dp/B0B771455N?ref=ppx_yo2ov_dt_b_product_details&th=1
 
 Soldered almost an entire 20 foot extension cord-worth of wires to get appropriate power to all parts of all panels.
+
 
 DFPlayer Module:
 https://www.amazon.com/dp/B08H4NF3FV?ref=ppx_yo2ov_dt_b_product_details&th=1
 
 Plays mp3s from an SD-card. Works pretty well in ESPHome, but it seems like in some conditions I need to "wait" for the module, for some milliseconds, before giving it a command. The built-in amplifier is amazing. Its driving a 5.6 ohm speaker I took out of a bluetooth speaker.
 
+
 LED Power Supply:
 https://www.amazon.com/dp/B07KC3KSHP?ref=ppx_yo2ov_dt_b_product_details&th=1
 
 You *can* run these panels from tons of 5v wallwarts at lower power levels. Gettting this appropriate supply really woke them up. I'm pretty sure as you reduce your maximum brightness in software, you lose steps/smoothness of color, so running at higher power levels will give you better color ontop of brightness.
+
 
 Adjustable synchronous buck regulator (probably not necessary):
 https://www.amazon.com/dp/B078C7ZS74?ref=ppx_yo2ov_dt_b_product_details&th=1
