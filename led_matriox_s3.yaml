@@ -1,0 +1,698 @@
+substitutions:
+  devicename: s3-4
+  devicefriendlyname: S3-4
+
+esphome:
+  name: $devicename
+  friendly_name: $devicefriendlyname
+  on_boot:
+    priority: 600
+    then:
+    - delay: 100ms
+#    - dfplayer.set_volume: 30
+#    - delay: 250ms
+    - dfplayer.play:
+        file: 11
+        loop: false
+
+  platformio_options:
+    board_upload.flash_size: 8MB
+    board_upload.maximum_size: 8388608
+    board_build.partitions: "../../../s3_custom_partition.csv"
+
+psram:
+  mode: octal
+  speed: 120MHz
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+    version: latest
+
+logger:
+#  level: none
+  
+debug:
+
+#esp32_touch:
+#  setup_mode: true
+#  low_voltage_reference: 0.8V
+#  high_voltage_reference: 2.4V
+#  voltage_attenuation: 1.5V
+#api:
+#  encryption:
+#    key: "INIE/h7pR4fe1SAkrWqE1Xp0lOgsstQoQSNw2SwpneI="
+
+ota:
+  password: "dc5b92fe7274dc4e649ad1b8f36a3221"
+
+wifi:
+  fast_connect: true
+  networks:
+#  - ssid: !secret wifi_ssid_mobile
+#    password: !secret wifi_password_mobile
+#  - ssid: !secret wifi_ssid
+#    password: !secret wifi_password
+  - ssid: !secret wifi_ssid_megan
+    password: !secret wifi_password_megan
+
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "tell your WiFi said hi $devicefriendlyname"
+  
+captive_portal:
+
+uart:
+  rx_pin: GPIO4
+  tx_pin: GPIO5
+  baud_rate: 9600
+
+dfplayer:
+
+
+output:
+  - platform: ledc
+    pin: GPIO14
+    id: gpio_14
+
+wled:
+
+web_server:
+
+color:
+  - id: red
+    red: 100%
+    green: 0%
+    blue: 0%
+  - id: blue
+    red: 0%
+    green: 0%
+    blue: 100%
+  - id: green
+    red: 0%
+    green: 90%
+    blue: 0%
+  - id: black
+    red: 0%
+    green: 0%
+    blue: 0%
+
+image:
+  - file: "ai4.gif"
+    id: dummy
+
+animation:
+  - file: "newscreen.gif"
+    id: gif2
+    type: RGB565
+    resize: 64x24
+  - file: "rainwide-flip.gif"
+    id: gif1
+    type: RGB565
+    resize: 64x16
+  - file: "newscreen.gif"
+    id: gif3
+    type: RGB565
+    resize: 64x24
+  - file: "jelly1.gif"
+    id: gif4
+    type: RGB565
+    resize: 64x16
+  - file: "load2.gif"
+    id: gif5
+    type: RGB565
+    resize: 64x16
+
+time:
+  - platform: sntp
+    timezone: EST5EDT,M3.2.0,M11.1.0
+    id: time_sntp
+
+font:
+        
+  - file: "arcade_r.ttf"
+    id: font_large
+    size: 7
+    glyphs: 
+      ['&', '@', '!', ',', '.', '"', '%', '(', ')', '+', '-', '_', ':', '°', '0',
+       '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
+       'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
+       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+       'u', 'v', 'w', 'x', 'y', 'z', '/','[', ']',"'"]
+
+  - file: "gfonts://Silkscreen@400"
+    id: font_xl
+    size: 32
+  - file: "lexis.ttf"
+    id: font_text
+    size: 8
+    glyphs: 
+      ['&', '@', '!', ',', '.', '"', '%', '(', ')', '+', '-', '_', ':', '°', '0',
+       '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
+       'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
+       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+       'u', 'v', 'w', 'x', 'y', 'z', '/','[', ']',"'", '?']
+
+  - file: "lexis.ttf"
+    id: font_scroll
+    size: 16
+    glyphs: 
+      ['&', '@', '!', ',', '.', '"', '%', '(', ')', '+', '-', '_', ':', '°', '0',
+       '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
+       'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
+       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+       'u', 'v', 'w', 'x', 'y', 'z', '/','[', ']',"'", '?']
+
+mqtt:
+  broker: zackshouse.duckdns.org
+  username: zack
+  password: !secret mqtt_password
+  topic_prefix: proto/$devicename
+  on_connect:
+          - dfplayer.play:
+              file: 5
+              loop: false
+display:
+  - platform: addressable_light
+    id: led_matrix_32x16_display
+    addressable_light_id: big_matrix
+    width: 64
+    height: 24
+    pixel_mapper: |-
+      int iMatrixOffset = y >= 8 ? 512 : 0;
+      if (x % 2 == 0) {
+        return (x * 8) + (y % 8) + iMatrixOffset;
+      }
+      return (x * 8) + iMatrixOffset + (7 - (y % 8));
+
+    rotation: 0°
+    update_interval: 20ms
+
+    on_page_change:
+
+      - to: page1
+        then:
+          - component.suspend: led_matrix_32x16_display
+          - component.resume:
+              id: led_matrix_32x16_display
+              update_interval: 20ms
+          - dfplayer.stop:
+
+      - to: page2
+        then:
+          - component.suspend: led_matrix_32x16_display
+          - component.resume:
+              id: led_matrix_32x16_display
+              update_interval: 20ms
+          - dfplayer.play:
+              file: 1
+              loop: false
+          - delay: 1sec
+          - dfplayer.play:
+              file: 6
+              loop: false
+      - to: page3
+        then:
+          - component.suspend: led_matrix_32x16_display
+          - component.resume:
+              id: led_matrix_32x16_display
+              update_interval: 28ms
+          - dfplayer.play:
+              file: 15
+              loop: true
+
+    pages:
+      - id: page1    
+        lambda: |-
+          auto text = Color(120, 0, 255);
+          auto black = Color(0, 0, 0);
+          Color red = Color(150, 0, 0);
+          Color green = Color(0x00FF00);
+          Color blue = Color(0, 0, 200);
+          Color white = Color(150, 150 , 150);
+          Color dark_red = Color(90, 0, 0);
+
+          if (id(one).state == "yes") {
+            id(gif4).next_frame();
+            it.image(0, 0, id(gif4), id(black), id(blue));
+            it.strftime(16, 0, id(font_text), white, TextAlign::TOP_LEFT, "%I", id(time_sntp).now());
+            it.strftime(16, 16, id(font_text), white, TextAlign::TOP_LEFT, "%M", id(time_sntp).now());
+          } else if(id(one).state == "yes2") {
+          id(gif5).next_frame();
+          it.image(0, 0, id(gif5), id(black), id(blue));
+          } else {
+          id(gif2).next_frame();
+          it.image(0, 0, id(gif2), id(black), id(blue));
+          it.strftime(6, 8, id(font_large), dark_red, TextAlign::TOP_LEFT, "%I", id(time_sntp).now());
+          it.strftime(6, 16, id(font_large), dark_red, TextAlign::TOP_LEFT, "%M", id(time_sntp).now());
+
+          };
+
+      - id: page2
+        lambda: |-
+          auto text = Color(120, 0, 255);
+          Color red = Color(150, 0, 0);
+          Color green = Color(0x00FF00);
+          Color blue = Color(0, 0, 90);
+          Color white = Color(90, 90, 90);
+          Color dark_red = Color(90, 0, 0);
+
+
+          static int16_t xpos = it.get_width();
+          const char * text2 = id(message).state.c_str();
+ 
+          auto color = Color(0, 180, 0);
+          auto color2 = Color(255, 255, 255);
+          int x_start, y_start;
+          int width, height;
+
+ 
+          it.get_text_bounds(
+            0, 0, text2, id(font_text), 
+            TextAlign::TOP_LEFT,
+            &x_start, &y_start, &width, &height
+          ); 
+ 
+          if(xpos < -1 * (width + 0)) {
+            xpos = it.get_width();
+          }
+ 
+          if(width <= it.get_width()) {
+            xpos = 0;
+          }
+          id(gif1).next_frame();
+          it.image(0, 8, id(gif1), id(black), id(blue));
+          it.print(
+            xpos,
+            0, 
+            id(font_text),
+            color, 
+            TextAlign::TOP_LEFT,
+            text2
+          ); 
+          xpos--;
+
+      - id: page3
+        lambda: |-
+          auto text = Color(120, 0, 255);
+          auto black = Color(0, 0, 0);
+          Color red = Color(150, 0, 0);
+          Color green = Color(0x00FF00);
+          Color blue = Color(0, 0, 90);
+          Color white = Color(90, 90, 90);
+          Color dark_red = Color(90, 0, 0);
+
+          if (id(one).state == "yes") {
+            id(gif4).next_frame();
+            it.image(0, 0, id(gif4), id(black), id(blue));
+          } else if(id(one).state == "yes2") {
+          id(gif5).next_frame();
+          it.image(0, 0, id(gif5), id(black), id(blue));
+          } else {
+          id(gif3).next_frame();
+          it.image(0, 0, id(gif3), id(black), id(blue));
+          };
+
+
+#binary_sensor:
+#  - platform: esp32_touch
+#    name: "ESP32 Touch Pad GPIO27"
+#    pin: GPIO4
+#    threshold: 1000
+
+sensor:
+  - platform: wifi_signal
+    name: Wifi signal
+  - platform: uptime
+    name: Uptime
+
+#  - platform: dht
+#    pin: GPIO13
+#    temperature:
+#      name: "S3-4 Temperature"
+#      unit_of_measurement: "°F"
+#      filters:
+#      - lambda: return x * (9.0/5.0) + 32.0;
+#    humidity:
+#      name: "S3-4 Humidity"
+#    update_interval: 30s
+
+
+#  - platform: template
+#    name: "Temperature Probe"
+#    lambda: |-
+#      return (id(stillmore2_temp).state);
+#    update_interval: 60s
+#    accuracy_decimals: 2
+#    unit_of_measurement: "°F"
+
+#  - platform: template
+#    name: "Temperature Probe Display"
+#    internal: True
+#    id: stillmore2_temp_display
+#    lambda: |-
+#      return (id(stillmore2_temp).state);
+#    update_interval: 1s
+#    accuracy_decimals: 2
+
+text_sensor:
+
+
+  - platform: mqtt_subscribe
+    name: "Page 3"
+    internal: True
+    id: page_3
+    topic: proto/s3-1/gif
+    on_value:
+        then:
+        - light.turn_off: led_matrix_light
+        - light.turn_off: led_matrix_light2
+        - light.turn_off: big_matrix
+
+        - display.page.show: page3
+        - component.resume: led_matrix_32x16_display
+
+  - platform: mqtt_subscribe
+    name: "Text for Display"
+    id: message
+    internal: true
+    topic: proto/s3-1/display
+    on_value:
+        then:
+        - light.turn_off: led_matrix_light
+        - light.turn_off: led_matrix_light2
+        - light.turn_off: big_matrix
+
+        - display.page.show: page2
+        - component.resume: led_matrix_32x16_display
+
+  - platform: mqtt_subscribe
+    name: "One"
+    id: one
+    internal: true
+    topic: proto/s3-1/one
+
+
+#  - platform: mqtt_subscribe
+#    name: "String Temperature to Log"
+#    internal: True
+#    id: stillmore2_temp_tolog
+#    topic: stillmore/stillmore-2/sensor/temperature_probe/state
+
+
+  - platform: mqtt_subscribe
+    name: "Home Screen"
+    internal: True
+    id: return_home
+    topic: proto/s3-1/home
+    on_value:
+        then:
+        - light.turn_off: led_matrix_light
+        - light.turn_off: led_matrix_light2
+        - light.turn_off: big_matrix
+
+        - display.page.show: page1
+        - component.resume: led_matrix_32x16_display
+
+
+#  - platform: mqtt_subscribe
+#    name: "Log Temperature Trigger"
+#    internal: True
+#    topic: stillmore/stillmore-2/templogtrigger
+#    on_value:
+#        then:
+#          - mqtt.publish:
+#              topic: stillmore/stillmore-2/loggedtemp
+#              payload: !lambda |-
+#                 return (id(stillmore2_temp_tolog)).state.c_str();
+
+#    on_multi_click:
+#      - timing:
+#          - ON FOR AT MOST 350ms
+#          - OFF FOR AT LEAST 10ms
+#        then:
+#          - mqtt.publish:
+#              topic: proto-4/button/get
+#              payload: "Button Pressed! Old test. dont worry about this"
+#      - timing:
+#          - ON FOR AT LEAST 350ms
+#        then:
+#          - voice_assistant.start:
+#      - timing:
+#          - ON FOR AT LEAST 350ms
+#          - OFF FOR AT LEAST 10ms
+#        then:
+#          - voice_assistant.stop:
+
+#media_player:
+#  - platform: i2s_audio
+#    id: media_out
+#    name: Media Player
+#    dac_type: external
+#    i2s_dout_pin: GPIO22
+#    mode: mono
+
+
+
+light:
+
+  - platform: monochromatic
+    output: gpio_14
+    name: "Laser"
+    effects:
+      - random:
+          transition_length: 100ms
+          update_interval: 100ms
+      - flicker:
+          alpha: 95%
+          intensity: 75%
+      - strobe:
+      - pulse:
+          transition_length: 10s
+          update_interval: 10s
+          min_brightness: 30%
+          max_brightness: 100%
+
+#  - platform: esp32_rmt_led_strip
+#    id: onboard_led
+#    name: Onboard LED
+#    pin: GPIO48
+#    default_transition_length: 1ms
+#    chipset: WS2812
+#    num_leds: 1
+#    rgb_order: grb
+#    rmt_channel: 0
+#    effects:
+#      - wled:
+#      - random:
+#          transition_length: 1000ms
+#          update_interval: 1000ms
+#      - flicker:
+#      - strobe:
+#      - pulse:
+#          transition_length: 1000ms
+#          update_interval: 1000ms    
+
+  - platform: esp32_rmt_led_strip
+    chipset: WS2812
+    rmt_channel: 0
+    pin: GPIO15
+    num_leds: 512
+    rgb_order: GRB
+    name: "led_matrix"
+    id: led_matrix_light
+    default_transition_length: 1ms
+    color_correct: [50%, 50%, 50%]
+    restore_mode: ALWAYS_OFF
+    internal: true
+    effects:
+      - addressable_twinkle:
+      - addressable_twinkle:
+          name: Big Twinkle
+          twinkle_probability: 95%
+          progress_interval: 4ms
+      - addressable_rainbow:
+      - addressable_rainbow:
+          name: Rainbow Custom
+          speed: 60
+          width: 100
+      - addressable_color_wipe:
+      - addressable_color_wipe:
+          name: Color Wipe Custom
+          colors:
+            - red: 100%
+              green: 100%
+              blue: 100%
+              num_leds: 1
+            - red: 0%
+              green: 0%
+              blue: 0%
+              num_leds: 1
+          add_led_interval: 100ms
+          reverse: false
+      - addressable_scan:
+      - addressable_scan:
+          name: Scan Effect Custom 
+          move_interval: 1ms
+          scan_width: 8
+      - addressable_random_twinkle:
+      - addressable_random_twinkle:
+          name: Random Twinkle Custom 
+          twinkle_probability: 65%
+          progress_interval: 32ms
+      - addressable_fireworks:
+      - addressable_fireworks:
+          name: Fireworks Custom 
+          update_interval: 32ms
+          spark_probability: 10%
+          use_random_color: false
+          fade_out_rate: 120
+      - addressable_flicker:
+      - addressable_flicker:
+          name: Flicker Custom 
+          update_interval: 8ms
+          intensity: 40%
+    on_turn_on:
+    - component.suspend: led_matrix_32x16_display
+
+  - platform: esp32_rmt_led_strip
+    chipset: WS2812
+    rmt_channel: 1
+    pin: GPIO16
+    num_leds: 1024
+    rgb_order: GRB
+    name: "led_matrix2"
+    id: led_matrix_light2
+    default_transition_length: 1ms
+    color_correct: [50%, 50%, 50%]
+    restore_mode: ALWAYS_OFF
+    internal: true
+    effects:
+      - addressable_twinkle:
+      - addressable_twinkle:
+          name: Big Twinkle
+          twinkle_probability: 95%
+          progress_interval: 4ms
+      - addressable_rainbow:
+      - addressable_rainbow:
+          name: Rainbow Custom
+          speed: 60
+          width: 100
+      - addressable_color_wipe:
+      - addressable_color_wipe:
+          name: Color Wipe Custom
+          colors:
+            - red: 100%
+              green: 100%
+              blue: 100%
+              num_leds: 1
+            - red: 0%
+              green: 0%
+              blue: 0%
+              num_leds: 1
+          add_led_interval: 100ms
+          reverse: false
+      - addressable_scan:
+      - addressable_scan:
+          name: Scan Effect Custom 
+          move_interval: 1ms
+          scan_width: 8
+      - addressable_random_twinkle:
+      - addressable_random_twinkle:
+          name: Random Twinkle Custom 
+          twinkle_probability: 65%
+          progress_interval: 32ms
+      - addressable_fireworks:
+      - addressable_fireworks:
+          name: Fireworks Custom 
+          update_interval: 32ms
+          spark_probability: 10%
+          use_random_color: false
+          fade_out_rate: 120
+      - addressable_flicker:
+      - addressable_flicker:
+          name: Flicker Custom 
+          update_interval: 8ms
+          intensity: 40%
+    on_turn_on:
+    - component.suspend: led_matrix_32x16_display
+
+
+  - platform: partition
+    name: "Big Matrix"
+    id: big_matrix
+    color_correct: [50%, 50%, 50%]
+    default_transition_length: 1ms
+    segments:
+      # Use first 10 LEDs from the light with ID light1
+#      - id: led_matrix_light
+#        from: 0
+#        to: 511
+      # Use first 10 LEDs from light with ID light2
+      # they become LEDs 11-20 in the joined partition
+      - id: led_matrix_light
+        from: 0
+        to: 511
+      - id: led_matrix_light2
+        from: 0
+        to: 1023
+#      - id: led_matrix_light3
+#        from: 0
+#        to: 511
+#      - id: partition_light_5
+#        from: 0
+#        to: 255
+    effects:
+      - addressable_twinkle:
+      - addressable_twinkle:
+          name: Big Twinkle
+          twinkle_probability: 95%
+          progress_interval: 4ms
+      - addressable_rainbow:
+      - addressable_rainbow:
+          name: Rainbow Custom
+          speed: 300
+          width: 100
+      - addressable_color_wipe:
+      - addressable_color_wipe:
+          name: Color Wipe Custom
+          colors:
+            - red: 100%
+              green: 100%
+              blue: 100%
+              num_leds: 1
+            - red: 0%
+              green: 0%
+              blue: 0%
+              num_leds: 1
+          add_led_interval: 100ms
+          reverse: false
+      - addressable_scan:
+      - addressable_scan:
+          name: Scan Effect Custom 
+          move_interval: 1ms
+          scan_width: 8
+      - addressable_random_twinkle:
+      - addressable_random_twinkle:
+          name: Random Twinkle Custom 
+          twinkle_probability: 99%
+          progress_interval: 64ms
+      - addressable_fireworks:
+      - addressable_fireworks:
+          name: Fireworks Custom 
+          update_interval: 32ms
+          spark_probability: 10%
+          use_random_color: false
+          fade_out_rate: 120
+      - addressable_flicker:
+      - addressable_flicker:
+          name: Flicker Custom 
+          update_interval: 8ms
+          intensity: 40%
+    on_turn_on:
+    - component.suspend: led_matrix_32x16_display
