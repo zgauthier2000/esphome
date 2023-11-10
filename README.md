@@ -30,5 +30,4 @@ Pictures!
 
 ![Screenshot_20231110-084827_Photos](https://github.com/zgauthier2000/esphome/assets/127626977/d638165d-a944-4ce9-a2eb-87f619aaa9a7)
 
-![20231107_094850](https://github.com/zgauthier2000/esphome/assets/127626977/fc540d41-9a80-4f1f-9b86-
-991a8ad4fe3e)
+![20231107_094850](https://github.com/zgauthier2000/esphome/assets/127626977/9276ef64-915d-4b7a-ae94-1dcdd2a45ac3)
